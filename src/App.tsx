@@ -20,143 +20,240 @@ interface SkillInfo {
 }
 
 const skillsData: Record<string, SkillInfo> = {
+  // --- Languages ---
   Python: {
-    proficiency: 95,
-    experience: "3 years",
+    proficiency: 92,
+    experience: "3+ years",
     description:
-      "Primary language for data science, ML pipelines, and backend development. Used extensively in academic projects and internships.",
+      "Primary language for data science, AI, and backend work. Used across Qualcomm capstone, teaching as a DS Programming II peer mentor, and personal projects.",
+  },
+  "C++": {
+    proficiency: 85,
+    experience: "2+ years",
+    description:
+      "Used for systems and performance-focused coursework, with emphasis on memory management, data structures, and algorithms.",
+  },
+  C: {
+    proficiency: 82,
+    experience: "2+ years",
+    description:
+      "Applied in systems and OS coursework to understand low-level execution, memory, and performance trade-offs.",
+  },
+  Java: {
+    proficiency: 88,
+    experience: "3+ years",
+    description:
+      "Foundation for algorithms, object-oriented design, and large-scale course projects. Experience with JUnit and test-driven development.",
+  },
+  "C#": {
+    proficiency: 90,
+    experience: "1+ years",
+    description:
+      "Used at 365Labs to build NIBRS-compliant law-enforcement systems in .NET and UWP, with strong focus on reliability and maintainability.",
   },
   JavaScript: {
     proficiency: 90,
-    experience: "2.5 years",
+    experience: "3+ years",
     description:
-      "Full-stack development with modern ES6+ features. Built multiple web applications and interactive data visualizations.",
+      "Core language for frontend and React Native development. Built real-time mobile and web apps, including motion-interaction and logistics tools.",
   },
   TypeScript: {
     proficiency: 85,
-    experience: "1.5 years",
+    experience: "1.5+ years",
     description:
-      "Type-safe development for large-scale React applications. Improved code quality and maintainability in team projects.",
-  },
-  Java: {
-    proficiency: 80,
-    experience: "2 years",
-    description:
-      "Object-oriented programming, data structures, and algorithms. Used in coursework and competitive programming.",
+      "Brings type safety and maintainability to React and full-stack projects, improving reliability and refactor safety.",
   },
   SQL: {
     proficiency: 88,
-    experience: "2 years",
+    experience: "2+ years",
     description:
-      "Complex queries, database design, and optimization. Experience with PostgreSQL, MySQL, and query performance tuning.",
+      "Experience with relational schema design, query optimization, and MSSQL in production-style systems.",
   },
   R: {
     proficiency: 75,
     experience: "1 year",
     description:
-      "Statistical analysis and data visualization. Used for academic research and exploratory data analysis projects.",
+      "Used for statistical analysis and exploratory data work in data science coursework.",
   },
-  React: {
-    proficiency: 92,
-    experience: "2 years",
+  "Assembly": {
+    proficiency: 70,
+    experience: "Academic projects",
     description:
-      "Modern React with hooks, context API, and state management. Built responsive, performant user interfaces.",
+      "Used in machine organization courses to understand computer architecture, low-level execution, and performance.",
   },
-  "Node.js": {
+  "HTML/CSS": {
     proficiency: 85,
-    experience: "2 years",
+    experience: "3+ years",
     description:
-      "RESTful API development, Express.js, and real-time applications with Socket.io. Deployed production services.",
+      "Responsive UI work for web and hybrid apps, paired with React and design frameworks.",
   },
-  TensorFlow: {
-    proficiency: 82,
-    experience: "1.5 years",
-    description:
-      "Deep learning model development and deployment. Built CNNs, RNNs, and transformer models for various tasks.",
-  },
-  PyTorch: {
-    proficiency: 80,
-    experience: "1 year",
-    description:
-      "Research-oriented ML framework. Used for custom model architectures and academic projects.",
-  },
-  Pandas: {
-    proficiency: 90,
-    experience: "2.5 years",
-    description:
-      "Data manipulation, cleaning, and analysis. Daily use in data science workflows and ETL pipelines.",
-  },
-  NumPy: {
+
+  // --- Frameworks & Libraries ---
+  ".NET": {
     proficiency: 88,
-    experience: "2.5 years",
+    experience: "1+ years",
     description:
-      "Numerical computing and array operations. Foundation for scientific computing and ML implementations.",
+      "Built production features for a Records Management System at 365Labs using .NET, UWP, and MVVM patterns.",
   },
-  Git: {
+  "React": {
+    proficiency: 92,
+    experience: "2+ years",
+    description:
+      "Modern React with hooks and component-based architecture, used for interactive UIs and internal tools.",
+  },
+  "React Native": {
     proficiency: 90,
-    experience: "3 years",
+    experience: "1.5+ years",
     description:
-      "Version control, branching strategies, and collaborative workflows. Managed multiple team projects on GitHub.",
+      "Core framework for mobile apps like the Driver’s Application and Magic Lab’s motion-interaction prototypes.",
   },
-  Docker: {
+  "PyTorch": {
+    proficiency: 85,
+    experience: "1.5+ years",
+    description:
+      "Used in the Qualcomm AI-Powered Feedback Coach to train, evaluate, and optimize pose and gaze estimation models.",
+  },
+  "Spring Boot": {
+    proficiency: 80,
+    experience: "1+ years",
+    description:
+      "Backend API development for scalable services with proper layering, testing, and database integration.",
+  },
+  "Pandas": {
+    proficiency: 90,
+    experience: "2.5+ years",
+    description:
+      "Data wrangling, feature engineering, and exploratory analysis in Python pipelines and AI experiments.",
+  },
+  "NumPy": {
+    proficiency: 88,
+    experience: "2.5+ years",
+    description:
+      "Vectorized numerical computing for ML and data processing workloads.",
+  },
+  "MediaPipe": {
+    proficiency: 80,
+    experience: "Project-based",
+    description:
+      "Used for pose and gesture analysis in computer-vision prototypes and interactive systems.",
+  },
+  "JUnit": {
+    proficiency: 82,
+    experience: "2+ years",
+    description:
+      "Unit testing for Java projects, reinforcing TDD and regression safety in course and side projects.",
+  },
+  "Bootstrap": {
     proficiency: 78,
-    experience: "1 year",
+    experience: "2+ years",
     description:
-      "Containerization of applications and microservices. Created CI/CD pipelines with Docker containers.",
+      "Rapid UI prototyping and consistent styling for web interfaces.",
   },
-  AWS: {
+
+  // --- Tools & Platforms ---
+  Azure: {
+    proficiency: 85,
+    experience: "1.5+ years",
+    description:
+      "Deployed cloud-backed APIs, MSSQL databases, and storage (Blob) for production-style logistics and RMS workflows.",
+  },
+  "Google Cloud Platform": {
     proficiency: 75,
     experience: "1 year",
     description:
-      "Cloud deployment with EC2, S3, Lambda, and RDS. Built serverless applications and managed cloud infrastructure.",
+      "Used for hosting and experimentation in ML and data projects.",
   },
-  MongoDB: {
-    proficiency: 82,
-    experience: "1.5 years",
-    description:
-      "NoSQL database design and aggregation pipelines. Used for flexible schema applications and real-time data.",
-  },
-  PostgreSQL: {
-    proficiency: 85,
-    experience: "2 years",
-    description:
-      "Advanced SQL, indexing, and database optimization. Designed normalized schemas for production applications.",
-  },
-  Tableau: {
-    proficiency: 80,
-    experience: "1.5 years",
-    description:
-      "Business intelligence and interactive dashboards. Created compelling data stories for stakeholder presentations.",
-  },
-  "Machine Learning": {
+  "Microsoft SQL Server": {
     proficiency: 88,
-    experience: "2 years",
+    experience: "1.5+ years",
     description:
-      "Supervised & unsupervised learning, feature engineering, model evaluation. Implemented algorithms from scratch.",
+      "Primary relational database for 365Labs RMS and Driver’s Application backend.",
   },
-  "Data Visualization": {
+  Git: {
+    proficiency: 92,
+    experience: "3+ years",
+    description:
+      "Daily use with feature branching, code reviews, and standardized workflows taught to 300+ students as a peer mentor.",
+  },
+  Docker: {
+    proficiency: 80,
+    experience: "1+ years",
+    description:
+      "Containerizing services, improving reproducibility, and enabling smoother deployment pipelines.",
+  },
+  "VS Code": {
     proficiency: 90,
-    experience: "2.5 years",
+    experience: "3+ years",
     description:
-      "Matplotlib, Seaborn, D3.js, and Plotly. Created publication-quality visualizations and interactive dashboards.",
+      "Primary environment for web, Python, and systems work with tailored tooling.",
   },
-  "RESTful APIs": {
-    proficiency: 87,
-    experience: "2 years",
-    description:
-      "API design, documentation with Swagger, authentication, and rate limiting. Built scalable backend services.",
-  },
-  Agile: {
+  "Visual Studio": {
     proficiency: 85,
-    experience: "1.5 years",
+    experience: "1+ years",
     description:
-      "Scrum methodology, sprint planning, and iterative development. Worked in agile teams during internships.",
+      "Used for .NET and C# development on enterprise codebases at 365Labs.",
+  },
+  IntelliJ: {
+    proficiency: 80,
+    experience: "2+ years",
+    description:
+      "Used for Java course projects and TDD with JUnit.",
+  },
+
+  // --- Concepts / Core strengths ---
+  Algorithms: {
+    proficiency: 88,
+    experience: "3+ years",
+    description:
+      "Strong foundation from coursework and projects, applied in optimization, data processing, and systems design.",
+  },
+  "Distributed Systems": {
+    proficiency: 80,
+    experience: "Courses & projects",
+    description:
+      "Understanding of concurrency, scaling, and reliability from systems and infrastructure-focused work.",
+  },
+  "Scalable Infrastructure": {
+    proficiency: 82,
+    experience: "Projects & internship",
+    description:
+      "Designing systems that handle growth in users, data, and complexity, from edge AI to logistics apps.",
+  },
+  "Relational Databases": {
+    proficiency: 88,
+    experience: "2+ years",
+    description:
+      "Schema design, normalization, and query design in MSSQL and other relational systems.",
+  },
+  "Performance Optimization": {
+    proficiency: 85,
+    experience: "Projects & coursework",
+    description:
+      "Reduced crash frequency and latency in motion-capture and AI pipelines; optimized inference for edge devices.",
+  },
+  Debugging: {
+    proficiency: 92,
+    experience: "3+ years",
+    description:
+      "Core strength reinforced through peer mentoring and production debugging of complex, asynchronous systems.",
+  },
+  "Test-Driven Development": {
+    proficiency: 80,
+    experience: "Courses & 365Labs",
+    description:
+      "Wrote unit tests and validation suites for compliance-heavy and backend modules before deployment.",
   },
   "CI/CD": {
     proficiency: 78,
-    experience: "1 year",
+    experience: "Project experience",
     description:
-      "GitHub Actions, automated testing, and deployment pipelines. Implemented DevOps practices in team projects.",
+      "Integrated tests and automated workflows into Git-based pipelines for reliable deployments.",
+  },
+  "Agile & Scrum Development": {
+    proficiency: 85,
+    experience: "1.5+ years",
+    description:
+      "Worked in Scrum teams at Magic Lab and 365Labs, contributing to sprints, standups, and iterative delivery.",
   },
 };
 
@@ -166,15 +263,51 @@ const skills: Record<
   "languages" | "frameworks" | "tools" | "concepts",
   string[]
 > = {
-  languages: ["Python", "JavaScript", "TypeScript", "Java", "SQL", "R"],
-  frameworks: ["React", "Node.js", "TensorFlow", "PyTorch", "Pandas", "NumPy"],
-  tools: ["Git", "Docker", "AWS", "MongoDB", "PostgreSQL", "Tableau"],
+  languages: [
+    "Python",
+    "C++",
+    "C",
+    "Java",
+    "C#",
+    "JavaScript",
+    "TypeScript",
+    "SQL",
+    "R",
+    "Assembly",
+    "HTML/CSS",
+  ],
+  frameworks: [
+    "React",
+    "React Native",
+    ".NET",
+    "PyTorch",
+    "Spring Boot",
+    "Pandas",
+    "NumPy",
+    "MediaPipe",
+    "JUnit",
+    "Bootstrap",
+  ],
+  tools: [
+    "Azure",
+    "Google Cloud Platform",
+    "Microsoft SQL Server",
+    "Git",
+    "Docker",
+    "VS Code",
+    "Visual Studio",
+    "IntelliJ",
+  ],
   concepts: [
-    "Machine Learning",
-    "Data Visualization",
-    "RESTful APIs",
-    "Agile",
+    "Algorithms",
+    "Distributed Systems",
+    "Scalable Infrastructure",
+    "Relational Databases",
+    "Performance Optimization",
+    "Debugging",
+    "Test-Driven Development",
     "CI/CD",
+    "Agile & Scrum Development",
   ],
 };
 
@@ -188,39 +321,67 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Predictive Analytics Dashboard",
+    title: "AI-Powered Feedback Coach (Qualcomm Capstone)",
     description:
-      "Built a real-time ML pipeline for predicting customer churn using ensemble methods. Deployed with Flask API and React frontend.",
-    tech: ["Python", "TensorFlow", "React", "AWS"],
-    highlights: ["95% accuracy", "10k+ predictions/day", "Real-time updates"],
-    link: "#",
-  },
-  {
-    title: "Social Network Graph Analyzer",
-    description:
-      "Graph-based analysis tool for detecting communities and influence patterns in social networks using NetworkX and custom algorithms.",
-    tech: ["Python", "NetworkX", "D3.js", "Neo4j"],
+      "Edge AI tool on Snapdragon PCs for real-time posture, gesture, and gaze analysis, using optimized inference pipelines for engagement feedback.",
+    tech: [
+      "Python",
+      "PyTorch",
+      "Computer Vision",
+      "Qualcomm AI SDKs",
+      "ONNX Runtime",
+    ],
     highlights: [
-      "100k+ nodes processed",
-      "Interactive viz",
-      "Graph algorithms",
+      "Real-time posture & gaze analysis",
+      "Sub-second inference on device",
+      "+25% engagement-score prediction accuracy",
     ],
     link: "#",
   },
   {
-    title: "Code Collaboration Platform",
+    title: "Driver’s Application",
     description:
-      "Real-time collaborative coding environment with syntax highlighting, live cursors, and integrated chat using WebSockets.",
-    tech: ["TypeScript", "React", "WebSocket", "MongoDB"],
-    highlights: ["Real-time sync", "500+ users", "Low latency"],
+      "Real-time task management app for truck drivers, streamlining proof-of-delivery tracking, communication, and document handling via cloud APIs.",
+    tech: ["JavaScript", "React Native", "Expo", "Azure", "MSSQL", "REST APIs"],
+    highlights: [
+      "End-to-end mobile + cloud architecture",
+      "Real-time logistics workflows",
+      "40% reduction in data-loss incidents",
+    ],
     link: "#",
   },
   {
-    title: "Sentiment Analysis API",
+    title: "Law Enforcement Records Automation",
     description:
-      "NLP service for multi-language sentiment analysis with custom-trained BERT models. Handles 1000+ requests per minute.",
-    tech: ["Python", "BERT", "FastAPI", "Docker"],
-    highlights: ["92% F1-score", "Multi-language", "Dockerized"],
+      "Modernized a Records Management System to ensure NIBRS compliance, automate PDF extraction, and reduce manual data entry for multi-state agencies.",
+    tech: [
+      "C#",
+      ".NET",
+      "UWP",
+      "Azure",
+      "MSSQL",
+      "iText7",
+      "GdPicture OCR",
+      "PSPDFKit",
+      "OpenAI",
+    ],
+    highlights: [
+      "100% NIBRS/IBR data validity across jurisdictions",
+      "60% reduction in manual entry time",
+      "Heuristic JSON mapping engine for flexible templates",
+    ],
+    link: "#",
+  },
+  {
+    title: "Motion-Capture Interaction Toolkit",
+    description:
+      "Realtime motion-capture system supporting fluid gesture interactions and narrative scripting for research in interactive systems.",
+    tech: ["JavaScript", "React Native", "Firebase", "Motion Capture"],
+    highlights: [
+      "40% reduction in crash frequency",
+      "Custom tweening for smooth pose transitions",
+      "Dynamic script editor for rapid prototyping",
+    ],
     link: "#",
   },
 ];
@@ -244,10 +405,16 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxScroll = 1600; // Distance to complete zoom
-      const progress = Math.min(scrollY / maxScroll, 1);
+
+      // Use exactly one viewport height as the full zoom distance
+      const maxScroll = window.innerHeight; // equals your 100vh spacer
+      const raw = scrollY / maxScroll;
+      const progress = Math.min(Math.max(raw, 0), 1);
+
       setScrollProgress(progress);
-      setShowContent(progress > 0.65); // Show content when 70% zoomed
+
+      // Reveal content near the end of the zoom
+      setShowContent(progress > 0.7);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -293,12 +460,15 @@ const Portfolio: React.FC = () => {
       alpha: true,
       antialias: true,
     });
-
+    const NETWORK_Y_OFFSET = -0.1;
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
-    
-    camera.position.z = 5;
-    
+    const target = new THREE.Vector3(0, NETWORK_Y_OFFSET, 0);
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 10;
+    camera.lookAt(target);
+
     // Create neural network nodes
     const nodes: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>[][] =
       [];
@@ -327,7 +497,7 @@ const Portfolio: React.FC = () => {
           nodeMaterial.clone()
         ) as THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
         const x = (layerIndex - 1.5) * 2; // tweak 2.5 ↔ 3.0 to taste
-        const y = (i - nodeCount / 2) * 0.5 - 1.2;
+        const y = (i - nodeCount / 2) * 0.5 - NETWORK_Y_OFFSET;
         node.position.set(x, y, 0);
         scene.add(node);
         layerNodes.push(node);
@@ -391,10 +561,25 @@ const Portfolio: React.FC = () => {
       animationId = requestAnimationFrame(animate);
       time += 0.01;
 
-      // Zoom based on scroll
-      camera.position.z = 5 - scrollProgress * 8;
+      // --- Two-phase zoom based on scrollProgress ---
 
-      // Rotate the entire network
+      const zFar = 5;
+      const zCenter = 3;
+      const zInside = -1;
+
+      const centerPhaseEnd = 0.45;
+
+      const phase1T = Math.min(scrollProgress / centerPhaseEnd, 1);
+      let cameraZ = zFar + (zCenter - zFar) * phase1T;
+
+      if (scrollProgress > centerPhaseEnd) {
+        const t = (scrollProgress - centerPhaseEnd) / (1 - centerPhaseEnd);
+        cameraZ = zCenter + (zInside - zCenter) * t;
+      }
+
+      camera.position.z = cameraZ;
+      camera.lookAt(target);
+
       const rotationY = time * 0.2;
       allNodes.forEach((node) => {
         if (node.parent) {
@@ -459,42 +644,40 @@ const Portfolio: React.FC = () => {
         <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
       </div>
 
-{scrollProgress < 0.1 && (
-  <div className="fixed inset-x-0 top-24 z-10">
-    <div className="max-w-6xl mx-auto px-6 md:px-10 flex">
-      {/* Text column */}
-      <div className="max-w-xl pointer-events-none">
-        <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-purple-300 mb-3">
-          Portfolio
-        </p>
+      {scrollProgress < 0.1 && (
+        <div className="fixed inset-x-0 top-24 z-10">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 flex">
+            {/* Text column */}
+            <div className="max-w-xl pointer-events-none">
+              <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-purple-300 mb-3">
+                Portfolio
+              </p>
 
-        <h1 className="text-4xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg text-left">
-          Neural Network
-          <br />
-          Portfolio
-        </h1>
+              <h1 className="text-4xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg text-left">
+                Arushi Taneja
+                <br />
+                Portfolio
+              </h1>
 
-        <p className="text-base md:text-xl text-gray-300 mb-8 drop-shadow-md text-left">
-          Computer Science &amp; Data Science
-        </p>
+              <p className="text-base md:text-xl text-gray-300 mb-8 drop-shadow-md text-left">
+                B.S. Computer Science &amp; Data Science @ UW–Madison
+              </p>
 
-        <div className="flex items-center gap-3 text-sm text-purple-300">
-          <span>Scroll to explore</span>
-          <div className="animate-bounce">
-            <div className="w-5 h-8 border-2 border-purple-400 rounded-full flex justify-center items-start">
-              <div className="w-1 h-3 bg-purple-400 rounded-full mt-1.5 animate-pulse" />
+              <div className="flex items-center gap-3 text-sm text-purple-300">
+                <span>Scroll to explore</span>
+                <div className="animate-bounce">
+                  <div className="w-5 h-8 border-2 border-purple-400 rounded-full flex justify-center items-start">
+                    <div className="w-1 h-3 bg-purple-400 rounded-full mt-1.5 animate-pulse" />
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* Empty flex space on the right so text doesn't sit over the network */}
+            <div className="flex-1" />
           </div>
         </div>
-      </div>
-
-      {/* Empty flex space on the right so text doesn't sit over the network */}
-      <div className="flex-1" />
-    </div>
-  </div>
-)}
-
-
+      )}
 
       {/* Spacer to enable scroll */}
       <div style={{ height: "100vh" }}></div>
@@ -509,7 +692,7 @@ const Portfolio: React.FC = () => {
         <nav className="sticky top-0 w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-purple-500/20">
           <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              YourName
+              Arushi Taneja
             </div>
             <div className="flex gap-6">
               {["About", "Skills", "Projects", "Resume"].map((item) => (
@@ -622,18 +805,20 @@ const Portfolio: React.FC = () => {
                 <Code className="w-12 h-12 text-purple-400 mb-4" />
                 <h3 className="text-2xl font-bold mb-4">Software Engineer</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Passionate about building scalable, user-centric applications.
-                  Experienced in full-stack development with modern frameworks
-                  and cloud technologies.
+                  I build reliable, scalable systems across desktop, web, and
+                  mobile. From NIBRS-compliant law-enforcement tools at 365Labs
+                  to real-time driver task management, I care about correctness,
+                  performance, and maintainable engineering.
                 </p>
               </div>
               <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
                 <Database className="w-12 h-12 text-pink-400 mb-4" />
-                <h3 className="text-2xl font-bold mb-4">Data Scientist</h3>
+                <h3 className="text-2xl font-bold mb-4">Data & AI Builder</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Skilled in extracting insights from complex datasets using
-                  statistical analysis, machine learning, and data visualization
-                  techniques.
+                  I work at the intersection of data, AI, and interaction:
+                  teaching data science programming, optimizing motion-capture
+                  pipelines, and building edge AI systems that translate complex
+                  signals into actionable insights.
                 </p>
               </div>
             </div>
@@ -641,17 +826,19 @@ const Portfolio: React.FC = () => {
               <Brain className="w-12 h-12 text-purple-400 mb-4" />
               <h3 className="text-2xl font-bold mb-4">My Journey</h3>
               <p className="text-gray-300 leading-relaxed mb-4">
-                As a senior pursuing a dual major in Computer Science and Data
-                Science, I'm at the intersection of software engineering and
-                analytics. My journey has been driven by curiosity about how we
-                can leverage technology and data to solve real-world problems.
+                I&apos;m pursuing a B.S. in Computer Science and Data Science at
+                the University of Wisconsin–Madison (GPA 3.54/4.00, expected
+                graduation May 2026). My work spans teaching, research, and
+                industry—mentoring 300+ students in Python and Git, building
+                motion-interaction systems in Magic Lab, and shipping
+                compliance-critical software at 365Labs.
               </p>
               <p className="text-gray-300 leading-relaxed">
-                From building machine learning pipelines to developing
-                full-stack applications, I thrive on challenges that push me to
-                learn and innovate. I'm actively seeking opportunities where I
-                can contribute to impactful projects while continuing to grow as
-                a technologist.
+                I enjoy problems where systems, data, and people meet:
+                optimizing pipelines, designing resilient architectures, and
+                turning messy real-world workflows into clear, robust software.
+                I&apos;m excited by roles where I can keep learning while
+                owning meaningful pieces of the stack.
               </p>
             </div>
             <div className="mt-8 flex gap-4 justify-center">
@@ -795,8 +982,10 @@ const Portfolio: React.FC = () => {
             <div className="bg-slate-900/50 backdrop-blur-sm p-12 rounded-2xl border border-purple-500/20">
               <FileText className="w-24 h-24 text-purple-400 mx-auto mb-8" />
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                Interested in learning more about my experience and
-                qualifications?
+                Want a deeper look at my experience at 365Labs, UW–Madison, and
+                Magic Lab, plus projects like the AI-Powered Feedback Coach and
+                Driver&apos;s Application? Download my full resume for details
+                on technologies, impact, and coursework.
               </p>
               <div className="flex gap-4 justify-center">
                 <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
@@ -811,7 +1000,7 @@ const Portfolio: React.FC = () => {
             {/* Footer */}
             <div className="mt-20 pt-8 border-t border-purple-500/20">
               <p className="text-gray-400 mb-4">
-                Let's build something amazing together
+                Let&apos;s build something impactful together.
               </p>
               <div className="flex gap-4 justify-center">
                 <a
@@ -822,7 +1011,7 @@ const Portfolio: React.FC = () => {
                 </a>
               </div>
               <p className="text-gray-500 text-sm mt-8">
-                © 2025 Your Name. Built with React & Tailwind CSS
+                © 2025 Arushi Taneja. Built with React &amp; Tailwind CSS
               </p>
             </div>
           </div>
