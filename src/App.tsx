@@ -75,7 +75,7 @@ const skillsData: Record<string, SkillInfo> = {
     description:
       "Used for statistical analysis and exploratory data work in data science coursework.",
   },
-  "Assembly": {
+  Assembly: {
     proficiency: 70,
     experience: "Academic projects",
     description:
@@ -95,7 +95,7 @@ const skillsData: Record<string, SkillInfo> = {
     description:
       "Built production features for a Records Management System at 365Labs using .NET, UWP, and MVVM patterns.",
   },
-  "React": {
+  React: {
     proficiency: 92,
     experience: "2+ years",
     description:
@@ -107,7 +107,7 @@ const skillsData: Record<string, SkillInfo> = {
     description:
       "Core framework for mobile apps like the Driver’s Application and Magic Lab’s motion-interaction prototypes.",
   },
-  "PyTorch": {
+  PyTorch: {
     proficiency: 85,
     experience: "1.5+ years",
     description:
@@ -119,31 +119,31 @@ const skillsData: Record<string, SkillInfo> = {
     description:
       "Backend API development for scalable services with proper layering, testing, and database integration.",
   },
-  "Pandas": {
+  Pandas: {
     proficiency: 90,
     experience: "2.5+ years",
     description:
       "Data wrangling, feature engineering, and exploratory analysis in Python pipelines and AI experiments.",
   },
-  "NumPy": {
+  NumPy: {
     proficiency: 88,
     experience: "2.5+ years",
     description:
       "Vectorized numerical computing for ML and data processing workloads.",
   },
-  "MediaPipe": {
+  MediaPipe: {
     proficiency: 80,
     experience: "Project-based",
     description:
       "Used for pose and gesture analysis in computer-vision prototypes and interactive systems.",
   },
-  "JUnit": {
+  JUnit: {
     proficiency: 82,
     experience: "2+ years",
     description:
       "Unit testing for Java projects, reinforcing TDD and regression safety in course and side projects.",
   },
-  "Bootstrap": {
+  Bootstrap: {
     proficiency: 78,
     experience: "2+ years",
     description:
@@ -196,8 +196,7 @@ const skillsData: Record<string, SkillInfo> = {
   IntelliJ: {
     proficiency: 80,
     experience: "2+ years",
-    description:
-      "Used for Java course projects and TDD with JUnit.",
+    description: "Used for Java course projects and TDD with JUnit.",
   },
 
   // --- Concepts / Core strengths ---
@@ -389,6 +388,127 @@ const projects: Project[] = [
 const isSectionId = (id: string): id is SectionId =>
   ["about", "skills", "projects", "resume"].includes(id as SectionId);
 
+// --------- Personal AI Chat -------------
+
+interface ChatMessage {
+  role: "user" | "bot";
+  text: string;
+}
+
+const initialMessages: ChatMessage[] = [
+  {
+    role: "bot",
+    text: "Hi, I’m Arushi’s AI. Ask me about her experience, projects, or skills.",
+  },
+  {
+    role: "bot",
+    text: "Try: “Summarize her resume” or “What are her strongest skills?”",
+  },
+];
+
+const PersonalAIChat: React.FC = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [input, setInput] = useState("");
+
+  const getMockReply = (question: string): string => {
+    const q = question.toLowerCase();
+
+    if (q.includes("resume") || q.includes("summary")) {
+      return "Arushi is a senior at UW–Madison studying Computer Science and Data Science. She’s done backend, full-stack, and ML work across internships, research, and course projects.";
+    }
+
+    if (q.includes("skills") || q.includes("tech") || q.includes("stack")) {
+      return "Her core stack includes React/TypeScript, Python, Spring Boot, SQL, and modern data tooling. She’s comfortable with distributed systems, ML pipelines, and full-stack web dev.";
+    }
+
+    if (q.includes("project")) {
+      return "She’s built systems like an AI-powered feedback coach, a law-enforcement PDF automation pipeline, a March Madness betting platform, and several OS-level projects in xv6.";
+    }
+
+    if (q.includes("contact") || q.includes("email") || q.includes("reach")) {
+      return "You can reach Arushi via the contact section or by email on her resume. She’s actively looking for software and ML engineering roles.";
+    }
+
+    return "Great question! Right now I’m using a simple demo brain, but in production this widget can be backed by a real LLM that’s grounded in Arushi’s resume, projects, and portfolio content.";
+  };
+
+  const handleSend = () => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    const userMsg: ChatMessage = { role: "user", text: trimmed };
+    const reply: ChatMessage = { role: "bot", text: getMockReply(trimmed) };
+
+    setMessages((prev) => [...prev, userMsg, reply]);
+    setInput("");
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="pointer-events-auto w-[320px] bg-slate-950/90 border border-purple-500/40 rounded-2xl shadow-xl shadow-purple-900/40 backdrop-blur-md p-4 flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] text-purple-300">
+            Ask my AI
+          </p>
+          <p className="text-sm text-gray-300">
+            Chat with an AI agent about Arushi.
+          </p>
+        </div>
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-semibold">
+          AI
+        </div>
+      </div>
+
+      <div className="h-40 overflow-y-auto bg-slate-900/60 rounded-xl p-3 space-y-2 text-sm">
+        {messages.map((m, idx) => (
+          <div
+            key={idx}
+            className={`max-w-[90%] ${
+              m.role === "user" ? "ml-auto text-right" : "mr-auto text-left"
+            }`}
+          >
+            <div
+              className={`inline-block px-3 py-2 rounded-xl ${
+                m.role === "user"
+                  ? "bg-purple-500/60 text-white"
+                  : "bg-slate-800/80 text-gray-100"
+              }`}
+            >
+              {m.text}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask about my experience..."
+          className="flex-1 bg-slate-900/80 border border-slate-700 rounded-xl px-3 py-2 text-sm outline-none focus:border-purple-400"
+        />
+        <button
+          onClick={handleSend}
+          className="px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:brightness-110 transition"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ------------- Main Portfolio -------------
+
 const Portfolio: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
@@ -399,6 +519,8 @@ const Portfolio: React.FC = () => {
     resume: false,
   });
   const [selectedSkill, setSelectedSkill] = useState<SkillName | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Handle scroll to control zoom
@@ -407,7 +529,7 @@ const Portfolio: React.FC = () => {
       const scrollY = window.scrollY;
 
       // Use exactly one viewport height as the full zoom distance
-      const maxScroll = window.innerHeight; // equals your 100vh spacer
+      const maxScroll = window.innerHeight; // equals 100vh spacer
       const raw = scrollY / maxScroll;
       const progress = Math.min(Math.max(raw, 0), 1);
 
@@ -460,16 +582,19 @@ const Portfolio: React.FC = () => {
       alpha: true,
       antialias: true,
     });
+
     const NETWORK_Y_OFFSET = -0.1;
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
+
     const target = new THREE.Vector3(0, NETWORK_Y_OFFSET, 0);
     camera.position.x = 0;
     camera.position.y = 0;
     camera.position.z = 10;
     camera.lookAt(target);
 
-    // Create neural network nodes
+    // Neural network nodes
     const nodes: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>[][] =
       [];
     const nodeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
@@ -479,7 +604,6 @@ const Portfolio: React.FC = () => {
       opacity: 1,
     });
 
-    // Create 4 layers
     const layers = [5, 8, 8, 3];
     const allNodes: THREE.Mesh<
       THREE.SphereGeometry,
@@ -496,8 +620,10 @@ const Portfolio: React.FC = () => {
           nodeGeometry,
           nodeMaterial.clone()
         ) as THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
-        const x = (layerIndex - 1.5) * 2; // tweak 2.5 ↔ 3.0 to taste
+
+        const x = (layerIndex - 1.5) * 2;
         const y = (i - nodeCount / 2) * 0.5 - NETWORK_Y_OFFSET;
+
         node.position.set(x, y, 0);
         scene.add(node);
         layerNodes.push(node);
@@ -506,7 +632,7 @@ const Portfolio: React.FC = () => {
       nodes.push(layerNodes);
     });
 
-    // Create connections between layers
+    // Connections between layers
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0xec4899,
       transparent: true,
@@ -532,7 +658,7 @@ const Portfolio: React.FC = () => {
       });
     }
 
-    // Add particles
+    // Particles
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 200;
     const positions = new Float32Array(particlesCount * 3);
@@ -561,12 +687,10 @@ const Portfolio: React.FC = () => {
       animationId = requestAnimationFrame(animate);
       time += 0.01;
 
-      // --- Two-phase zoom based on scrollProgress ---
-
+      // Two-phase zoom based on scrollProgress
       const zFar = 5;
       const zCenter = 3;
       const zInside = -1;
-
       const centerPhaseEnd = 0.45;
 
       const phase1T = Math.min(scrollProgress / centerPhaseEnd, 1);
@@ -613,7 +737,6 @@ const Portfolio: React.FC = () => {
 
     animate();
 
-    // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -644,10 +767,10 @@ const Portfolio: React.FC = () => {
         <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
       </div>
 
+      {/* Hero text overlay */}
       {scrollProgress < 0.1 && (
         <div className="fixed inset-x-0 top-24 z-10">
           <div className="max-w-6xl mx-auto px-6 md:px-10 flex">
-            {/* Text column */}
             <div className="max-w-xl pointer-events-none">
               <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-purple-300 mb-3">
                 Portfolio
@@ -673,14 +796,13 @@ const Portfolio: React.FC = () => {
               </div>
             </div>
 
-            {/* Empty flex space on the right so text doesn't sit over the network */}
             <div className="flex-1" />
           </div>
         </div>
       )}
 
       {/* Spacer to enable scroll */}
-      <div style={{ height: "100vh" }}></div>
+      <div style={{ height: "100vh" }} />
 
       {/* Main Content - Appears after zoom */}
       <div
@@ -757,7 +879,7 @@ const Portfolio: React.FC = () => {
                     style={{
                       width: `${skillsData[selectedSkill].proficiency}%`,
                     }}
-                  ></div>
+                  />
                 </div>
               </div>
 
@@ -843,19 +965,26 @@ const Portfolio: React.FC = () => {
             </div>
             <div className="mt-8 flex gap-4 justify-center">
               <a
-                href="#"
+                href="https://github.com/arushi0207"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Arushi's GitHub"
                 className="p-3 bg-purple-500/20 hover:bg-purple-500/40 rounded-full transition-all duration-300 hover:scale-110"
               >
                 <Github className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/ataneja2"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Arushi's LinkedIn"
                 className="p-3 bg-purple-500/20 hover:bg-purple-500/40 rounded-full transition-all duration-300 hover:scale-110"
               >
                 <Linkedin className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="mailto:arushitaneja2004@gmail.com"
+                aria-label="Email Arushi"
                 className="p-3 bg-purple-500/20 hover:bg-purple-500/40 rounded-full transition-all duration-300 hover:scale-110"
               >
                 <Mail className="w-6 h-6" />
@@ -952,7 +1081,7 @@ const Portfolio: React.FC = () => {
                           key={highlight}
                           className="flex items-center gap-1"
                         >
-                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
                           {highlight}
                         </span>
                       ))}
@@ -1004,10 +1133,10 @@ const Portfolio: React.FC = () => {
               </p>
               <div className="flex gap-4 justify-center">
                 <a
-                  href="mailto:your.email@example.com"
+                  href="mailto:arushitaneja2004@gmail.com"
                   className="text-purple-400 hover:text-purple-300 transition-colors"
                 >
-                  your.email@example.com
+                  arushitaneja2004@gmail.com
                 </a>
               </div>
               <p className="text-gray-500 text-sm mt-8">
@@ -1016,6 +1145,23 @@ const Portfolio: React.FC = () => {
             </div>
           </div>
         </section>
+      </div>
+
+      {/* Floating AI Chat & Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        {isChatOpen && (
+          <div className="mb-2">
+            <PersonalAIChat />
+          </div>
+        )}
+
+        <button
+          onClick={() => setIsChatOpen((open) => !open)}
+          aria-label={isChatOpen ? "Close AI chat" : "Open AI chat"}
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg shadow-purple-500/40 flex items-center justify-center text-sm font-semibold hover:scale-110 transition-transform"
+        >
+          AI
+        </button>
       </div>
     </div>
   );
