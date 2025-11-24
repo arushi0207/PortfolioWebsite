@@ -525,6 +525,7 @@ const Portfolio: React.FC = () => {
   const scrollProgressRef = useRef(0);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cursorCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Handle scroll to control zoom
   useEffect(() => {
@@ -550,7 +551,6 @@ const Portfolio: React.FC = () => {
     scrollProgressRef.current = scrollProgress;
   }, [scrollProgress]);
 
-
   // Intersection Observer for sections
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -575,198 +575,321 @@ const Portfolio: React.FC = () => {
   }, []);
 
   // Three.js Neural Network
-// Three.js Neural Network
-useEffect(() => {
-  if (!canvasRef.current) return;
+  useEffect(() => {
+    if (!canvasRef.current) return;
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  const renderer = new THREE.WebGLRenderer({
-    canvas: canvasRef.current,
-    alpha: true,
-    antialias: true,
-  });
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      alpha: true,
+      antialias: true,
+    });
 
-  const NETWORK_Y_OFFSET = -0.1;
+    const NETWORK_Y_OFFSET = -0.1;
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
 
-  const target = new THREE.Vector3(0, NETWORK_Y_OFFSET, 0);
-  camera.position.set(0, 0, 10);
-  camera.lookAt(target);
+    const target = new THREE.Vector3(0, NETWORK_Y_OFFSET, 0);
+    camera.position.set(0, 0, 10);
+    camera.lookAt(target);
 
-  // --- Nodes setup (unchanged) ---
-  const nodes: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>[][] =
-    [];
-  const nodeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-  const nodeMaterial = new THREE.MeshBasicMaterial({
-    color: 0xa855f7,
-    transparent: true,
-    opacity: 1,
-  });
+    // --- Nodes setup ---
+    const nodes: THREE.Mesh<
+      THREE.SphereGeometry,
+      THREE.MeshBasicMaterial
+    >[][] = [];
+    const nodeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+    const nodeMaterial = new THREE.MeshBasicMaterial({
+      color: 0xa855f7,
+      transparent: true,
+      opacity: 1,
+    });
 
-  const layers = [5, 8, 8, 3];
-  const allNodes: THREE.Mesh<
-    THREE.SphereGeometry,
-    THREE.MeshBasicMaterial
-  >[] = [];
-
-  layers.forEach((nodeCount, layerIndex) => {
-    const layerNodes: THREE.Mesh<
+    const layers = [5, 8, 8, 3];
+    const allNodes: THREE.Mesh<
       THREE.SphereGeometry,
       THREE.MeshBasicMaterial
     >[] = [];
-    for (let i = 0; i < nodeCount; i++) {
-      const node = new THREE.Mesh(
-        nodeGeometry,
-        nodeMaterial.clone()
-      ) as THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 
-      const x = (layerIndex - 1.5) * 2;
-      const y = (i - nodeCount / 2) * 0.5 - NETWORK_Y_OFFSET;
+    layers.forEach((nodeCount, layerIndex) => {
+      const layerNodes: THREE.Mesh<
+        THREE.SphereGeometry,
+        THREE.MeshBasicMaterial
+      >[] = [];
+      for (let i = 0; i < nodeCount; i++) {
+        const node = new THREE.Mesh(
+          nodeGeometry,
+          nodeMaterial.clone()
+        ) as THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 
-      node.position.set(x, y, 0);
-      scene.add(node);
-      layerNodes.push(node);
-      allNodes.push(node);
-    }
-    nodes.push(layerNodes);
-  });
+        const x = (layerIndex - 1.5) * 2;
+        const y = (i - nodeCount / 2) * 0.5 - NETWORK_Y_OFFSET;
 
-  // --- Connections (unchanged) ---
-  const lineMaterial = new THREE.LineBasicMaterial({
-    color: 0xec4899,
-    transparent: true,
-    opacity: 0.3,
-  });
-
-  const connections: THREE.Line<
-    THREE.BufferGeometry,
-    THREE.LineBasicMaterial
-  >[] = [];
-  for (let i = 0; i < layers.length - 1; i++) {
-    nodes[i].forEach((startNode) => {
-      nodes[i + 1].forEach((endNode) => {
-        const points = [startNode.position, endNode.position];
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const line = new THREE.Line(
-          geometry,
-          lineMaterial.clone()
-        ) as THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial>;
-        scene.add(line);
-        connections.push(line);
-      });
-    });
-  }
-
-  // --- Particles (unchanged) ---
-  const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 200;
-  const positions = new Float32Array(particlesCount * 3);
-
-  for (let i = 0; i < particlesCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 15;
-  }
-
-  particlesGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(positions, 3)
-  );
-  const particlesMaterial = new THREE.PointsMaterial({
-    color: 0xa855f7,
-    size: 0.03,
-    transparent: true,
-    opacity: 0.6,
-  });
-  const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-  scene.add(particles);
-
-  let animationId: number;
-  let time = 0;
-
-  const animate = () => {
-    animationId = requestAnimationFrame(animate);
-    time += 0.01;
-
-    // --- Use the *current* scroll progress from the ref ---
-    const progress = scrollProgressRef.current;
-
-    // Two-phase zoom
-    const zFar = 5;
-    const zCenter = 3;
-    const zInside = -1;
-    const centerPhaseEnd = 0.45;
-
-    const phase1T = Math.min(progress / centerPhaseEnd, 1);
-    let targetZ = zFar + (zCenter - zFar) * phase1T;
-
-    if (progress > centerPhaseEnd) {
-      const t = (progress - centerPhaseEnd) / (1 - centerPhaseEnd);
-      targetZ = zCenter + (zInside - zCenter) * t;
-    }
-
-    // Smooth the camera motion with a simple lerp
-    camera.position.z += (targetZ - camera.position.z) * 0.08;
-    camera.lookAt(target);
-
-    // Rotation & animation stay continuous now
-    const rotationY = time * 0.2;
-    allNodes.forEach((node) => {
-      if (node.parent) {
-        node.parent.rotation.y = rotationY;
+        node.position.set(x, y, 0);
+        scene.add(node);
+        layerNodes.push(node);
+        allNodes.push(node);
       }
-    });
-    particles.rotation.y = time * 0.1;
-
-    // Pulse nodes
-    allNodes.forEach((node, idx) => {
-      const scale = 1 + Math.sin(time * 2 + idx * 0.5) * 0.2;
-      node.scale.set(scale, scale, scale);
+      nodes.push(layerNodes);
     });
 
-    // Fade out as we zoom in
-    const fadeProgress = Math.max(0, progress - 0.5) * 2;
-    const nodeOpacity = 1 - fadeProgress;
-    const connectionOpacity = 0.3 * (1 - fadeProgress);
-    const particleOpacity = 0.6 * (1 - fadeProgress);
-
-    allNodes.forEach((node) => {
-      node.material.opacity = nodeOpacity;
+    // --- Connections ---
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0xec4899,
+      transparent: true,
+      opacity: 0.3,
     });
-    connections.forEach((line) => {
-      line.material.opacity = connectionOpacity;
+
+    const connections: THREE.Line<
+      THREE.BufferGeometry,
+      THREE.LineBasicMaterial
+    >[] = [];
+    for (let i = 0; i < layers.length - 1; i++) {
+      nodes[i].forEach((startNode) => {
+        nodes[i + 1].forEach((endNode) => {
+          const points = [startNode.position, endNode.position];
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          const line = new THREE.Line(
+            geometry,
+            lineMaterial.clone()
+          ) as THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial>;
+          scene.add(line);
+          connections.push(line);
+        });
+      });
+    }
+
+    // --- Particles ---
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 200;
+    const positions = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 15;
+    }
+
+    particlesGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    const particlesMaterial = new THREE.PointsMaterial({
+      color: 0xa855f7,
+      size: 0.03,
+      transparent: true,
+      opacity: 0.6,
     });
-    particlesMaterial.opacity = particleOpacity;
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
 
-    renderer.render(scene, camera);
-  };
+    let animationId: number;
+    let time = 0;
 
-  animate();
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      time += 0.01;
 
-  const handleResize = () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  };
-  window.addEventListener("resize", handleResize);
+      // Use the current scroll progress from the ref
+      const progress = scrollProgressRef.current;
 
-  return () => {
-    window.removeEventListener("resize", handleResize);
-    cancelAnimationFrame(animationId);
-    renderer.dispose();
-    particlesGeometry.dispose();
-    particlesMaterial.dispose();
-    nodeGeometry.dispose();
-    lineMaterial.dispose();
-  };
-}, []); // 👈 run once, no scrollProgress here
+      // Two-phase zoom
+      const zFar = 5;
+      const zCenter = 3;
+      const zInside = -1;
+      const centerPhaseEnd = 0.45;
 
+      const phase1T = Math.min(progress / centerPhaseEnd, 1);
+      let targetZ = zFar + (zCenter - zFar) * phase1T;
+
+      if (progress > centerPhaseEnd) {
+        const t = (progress - centerPhaseEnd) / (1 - centerPhaseEnd);
+        targetZ = zCenter + (zInside - zCenter) * t;
+      }
+
+      // Smooth the camera motion with a simple lerp
+      camera.position.z += (targetZ - camera.position.z) * 0.08;
+      camera.lookAt(target);
+
+      // Rotation & animation stay continuous now
+      const rotationY = time * 0.2;
+      allNodes.forEach((node) => {
+        if (node.parent) {
+          node.parent.rotation.y = rotationY;
+        }
+      });
+      particles.rotation.y = time * 0.1;
+
+      // Pulse nodes
+      allNodes.forEach((node, idx) => {
+        const scale = 1 + Math.sin(time * 2 + idx * 0.5) * 0.2;
+        node.scale.set(scale, scale, scale);
+      });
+
+      // Fade out as we zoom in
+      const fadeProgress = Math.max(0, progress - 0.5) * 2;
+      const nodeOpacity = 1 - fadeProgress;
+      const connectionOpacity = 0.3 * (1 - fadeProgress);
+      const particleOpacity = 0.6 * (1 - fadeProgress);
+
+      allNodes.forEach((node) => {
+        node.material.opacity = nodeOpacity;
+      });
+      connections.forEach((line) => {
+        line.material.opacity = connectionOpacity;
+      });
+      particlesMaterial.opacity = particleOpacity;
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
+      particlesGeometry.dispose();
+      particlesMaterial.dispose();
+      nodeGeometry.dispose();
+      lineMaterial.dispose();
+    };
+  }, []); // run once
+
+  // Particle Cursor Trail
+  useEffect(() => {
+    if (!cursorCanvasRef.current) return;
+
+    const canvas = cursorCanvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resize();
+
+    interface Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      life: number;
+      maxLife: number;
+      color: string;
+    }
+
+    const particles: Particle[] = [];
+    const maxParticles = 20;
+    let mouseX = 0;
+    let mouseY = 0;
+    let lastTime = Date.now();
+
+    const colors = [
+      "rgba(168, 85, 247, ", // purple-500
+      "rgba(236, 72, 153, ", // pink-500
+      "rgba(192, 132, 252, ", // purple-400
+    ];
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (particles.length < maxParticles) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const maxLife = Math.random() * 60 + 40;
+
+        particles.push({
+          x: mouseX,
+          y: mouseY,
+          size: Math.random() * 4 + 2,
+          speedX: (Math.random() - 0.5) * 2,
+          speedY: (Math.random() - 0.5) * 2,
+          life: maxLife,
+          maxLife: Math.random() * 60 + 40,
+          color: color,
+        });
+      }
+    };
+
+    let animationFrameId: number;
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      const currentTime = Date.now();
+      const deltaTime = currentTime - lastTime;
+      lastTime = currentTime;
+
+      // Clear canvas completely each frame so Three.js shows through
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life--;
+
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        const opacityFactor = 0.4;
+        const opacity = (p.life / p.maxLife) * opacityFactor;
+
+
+        // Outer glow
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(
+          p.x,
+          p.y,
+          0,
+          p.x,
+          p.y,
+          p.size * 2
+        );
+        gradient.addColorStop(0, p.color + opacity + ")");
+        gradient.addColorStop(0.5, p.color + opacity * 0.5 + ")");
+        gradient.addColorStop(1, p.color + "0)");
+        ctx.fillStyle = gradient;
+        ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner core
+        ctx.beginPath();
+        ctx.fillStyle = p.color + opacity + ")";
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", resize);
+    animate();
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   const scrollToSection = (id: SectionId) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -780,9 +903,15 @@ useEffect(() => {
         <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
       </div>
 
+      {/* Cursor Particle Canvas (above 3D, below content) */}
+      <canvas
+        ref={cursorCanvasRef}
+        className="fixed inset-0 z-40 pointer-events-none"
+      />
+
       {/* Hero text overlay */}
       {scrollProgress < 0.1 && (
-        <div className="fixed inset-x-0 top-24 z-10">
+        <div className="fixed inset-x-0 top-24 z-20">
           <div className="max-w-6xl mx-auto px-6 md:px-10 flex">
             <div className="max-w-xl pointer-events-none">
               <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-purple-300 mb-3">
@@ -819,7 +948,7 @@ useEffect(() => {
 
       {/* Main Content - Appears after zoom */}
       <div
-        className={`relative z-10 transition-opacity duration-1000 ${
+        className={`relative z-20 transition-opacity duration-1000 ${
           showContent ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -1130,21 +1259,21 @@ useEffect(() => {
                 on technologies, impact, and coursework.
               </p>
               <div className="flex gap-4 justify-center">
-                  <a
-                    href={RESUME_URL}
-                    download
-                    className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
-                  >
+                <a
+                  href={RESUME_URL}
+                  download
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
+                >
                   Download Resume
-                  </a>
-                  <a
-                    href={RESUME_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-8 py-4 bg-slate-800 rounded-full font-semibold border border-purple-500/50 hover:bg-slate-700 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
-                  >
+                </a>
+                <a
+                  href={RESUME_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-4 bg-slate-800 rounded-full font-semibold border border-purple-500/50 hover:bg-slate-700 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
+                >
                   View Online
-                  </a>
+                </a>
               </div>
             </div>
 
