@@ -312,44 +312,70 @@ const skills: Record<
   ],
 };
 
+interface ProjectLink {
+  label: string;
+  href: string;
+  kind?: "github" | "demo";
+  note?: string;
+}
+
 interface Project {
   title: string;
   description: string;
   tech: string[];
   highlights: string[];
-  link: string;
+  links?: ProjectLink[];
 }
 
 const projects: Project[] = [
   {
     title: "AI-Powered Feedback Coach (Qualcomm Capstone)",
     description:
-      "Edge AI tool on Snapdragon PCs for real-time posture, gesture, and gaze analysis, using optimized inference pipelines for engagement feedback.",
+      "An on device AI system for analyzing posture, gaze, gestures, and expressions during presentations. Built to run efficiently on Snapdragon PCs and turn multimodal signals into clear, actionable feedback for speakers.",
     tech: [
       "Python",
       "PyTorch",
       "Computer Vision",
       "Qualcomm AI SDKs",
       "ONNX Runtime",
+      "Video Language Models"
     ],
     highlights: [
-      "Real-time posture & gaze analysis",
-      "Sub-second inference on device",
-      "+25% engagement-score prediction accuracy",
+      "End to end video analysis pipeline on device",
+      "Optimized vision language models for stable, low latency inference",
+      "Human readable engagement scoring and feedback reports",
     ],
-    link: "#",
+    links: [
+    {
+      label: "GitHub",
+      href: "https://github.com/arushi0207/CS620-Snapdragons",
+      kind: "github",
+    },
+    {
+      label: "Live Demo (frontend)",
+      href: "https://cs-620-snapdragons.vercel.app/",
+      kind: "demo",
+      note: "Backend currently runs locally",
+    },
+  ],
   },
   {
-    title: "Driver’s Application",
+    title: "XpertDispatch Driver's Application",
     description:
-      "Real-time task management app for truck drivers, streamlining proof-of-delivery tracking, communication, and document handling via cloud APIs.",
-    tech: ["JavaScript", "React Native", "Expo", "Azure", "MSSQL", "REST APIs"],
+      "A real-time task management app for truck drivers that simplifies proof-of-delivery workflows. Built as a full-stack system with secure document upload and a production-ready mobile experience.",
+    tech: ["React Native", "Expo", "JavaScript", "Azure", "MSSQL", "REST APIs", "Azure Blob Storage", "XCode"],
     highlights: [
-      "End-to-end mobile + cloud architecture",
-      "Real-time logistics workflows",
-      "40% reduction in data-loss incidents",
+      "Designed end-to-end workflow from mobile UI to database-backed APIs",
+      "Secure proof-of-delivery uploads to reduce missing or lost documents",
+      "Shipped to real users with production deployment and iteration",
     ],
-    link: "#",
+    links: [
+    {
+      label: "iOS App Store",
+      href: "https://apps.apple.com/us/app/xpertdriver/id6753903503",
+      kind: "demo",
+    },
+  ],
   },
   {
     title: "Law Enforcement Records Automation",
@@ -371,7 +397,19 @@ const projects: Project[] = [
       "60% reduction in manual entry time",
       "Heuristic JSON mapping engine for flexible templates",
     ],
-    link: "#",
+    links: [
+    {
+      label: "GitHub",
+      href: "https://github.com/arushi0207/CS620-Snapdragons",
+      kind: "github",
+    },
+    {
+      label: "Live Demo (frontend)",
+      href: "https://cs-620-snapdragons.vercel.app/",
+      kind: "demo",
+      note: "Backend currently runs locally",
+    },
+  ],
   },
   {
     title: "Motion-Capture Interaction Toolkit",
@@ -383,7 +421,19 @@ const projects: Project[] = [
       "Custom tweening for smooth pose transitions",
       "Dynamic script editor for rapid prototyping",
     ],
-    link: "#",
+    links: [
+    {
+      label: "GitHub",
+      href: "https://github.com/arushi0207/CS620-Snapdragons",
+      kind: "github",
+    },
+    {
+      label: "Live Demo (frontend)",
+      href: "https://cs-620-snapdragons.vercel.app/",
+      kind: "demo",
+      note: "Backend currently runs locally",
+    },
+  ],
   },
 ];
 
@@ -1069,20 +1119,36 @@ const Portfolio: React.FC = () => {
                 <Code className="w-12 h-12 text-purple-400 mb-4" />
                 <h3 className="text-2xl font-bold mb-4">Software Engineer</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  I build reliable, scalable systems across desktop, web, and
-                  mobile. From NIBRS-compliant law-enforcement tools at 365Labs
-                  to real-time driver task management, I care about correctness,
-                  performance, and maintainable engineering.
+                  I like building software that holds up in the real world;
+                  messy inputs, edge cases, strict requirements, and evolving needs. 
+                  I'm curious by default, and I tend to dig deep when something doesn't 
+                  quite make sense. That curiosity shows up in how I debug, how I design systems,
+                  and how I think about tradeoffs.
+                </p>
+                <p className="text-gray-300 leading-relaxed">
+                  I try to put my best foot forward in everything I ship: 
+                  writing code that's readable, testable, and easy for the 
+                  next person to understand. Whether I'm working on backend 
+                  services or full-stack features, I care about correctness, 
+                  maintainability, and building things that people can trust. 
                 </p>
               </div>
               <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
                 <Database className="w-12 h-12 text-pink-400 mb-4" />
                 <h3 className="text-2xl font-bold mb-4">Data & AI Builder</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  I work at the intersection of data, AI, and interaction:
-                  teaching data science programming, optimizing motion-capture
-                  pipelines, and building edge AI systems that translate complex
-                  signals into actionable insights.
+                  I'm drawn to learning how systems work end to end, from raw
+                  data and noisy signals to the feedback a user actually sees.
+                  I enjoy exploring new tools and ideas, especially in AI and data,
+                  but I'm most interested in making them practical, reliable, and 
+                  understandable.
+                </p>
+                <p className="text-gray-300 leading-relaxed">
+                  I like asking “why” and “what if.” Why a model behaves a certain 
+                  way, what happens under real constraints, and how results can be
+                   made clearer and more useful. For me, building with AI isn't just
+                    about accuracy. It’s about stability, evaluation, and creating 
+                    experiences that help people improve.
                 </p>
               </div>
             </div>
@@ -1090,19 +1156,18 @@ const Portfolio: React.FC = () => {
               <Brain className="w-12 h-12 text-purple-400 mb-4" />
               <h3 className="text-2xl font-bold mb-4">My Journey</h3>
               <p className="text-gray-300 leading-relaxed mb-4">
-                I&apos;m pursuing a B.S. in Computer Science and Data Science at
-                the University of Wisconsin–Madison (GPA 3.54/4.00, expected
-                graduation May 2026). My work spans teaching, research, and
-                industry—mentoring 300+ students in Python and Git, building
-                motion-interaction systems in Magic Lab, and shipping
-                compliance-critical software at 365Labs.
+                I'm pursuing a B.S. in Computer Science and Data Science at UW-Madison, 
+                and my path so far has been shaped by a mix of teaching, research, and 
+                industry work. I've mentored hundreds of students, built research prototypes
+                that needed constant iteration, and shipped production software where details
+                really mattered. Each of those experiences pushed me to learn quickly and stay
+                grounded in real constraints.
               </p>
               <p className="text-gray-300 leading-relaxed">
-                I enjoy problems where systems, data, and people meet:
-                optimizing pipelines, designing resilient architectures, and
-                turning messy real-world workflows into clear, robust software.
-                I&apos;m excited by roles where I can keep learning while
-                owning meaningful pieces of the stack.
+                I enjoy problems where I'm constantly learning, whether that's understanding 
+                a new system, refining a pipeline, or figuring out how to turn something 
+                complex into something clear. I'm excited by roles where I can take ownership,
+                keep growing, and contribute thoughtfully to systems that actually get used.
               </p>
             </div>
             <div className="mt-8 flex gap-4 justify-center">
@@ -1194,42 +1259,62 @@ const Portfolio: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {projects.map((project, idx) => (
                 <div
-                  key={idx}
-                  className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105 group"
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-2xl font-bold group-hover:text-purple-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <ExternalLink className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <p className="text-gray-300 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-purple-500/20 rounded-full text-xs"
-                      >
-                        {tech}
+                key={idx}
+                className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105 group"
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-2xl font-bold group-hover:text-purple-400 transition-colors">
+                    {project.title}
+                  </h3>
+                </div>
+
+                <p className="text-gray-300 mb-4 leading-relaxed">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-purple-500/20 rounded-full text-xs"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="border-t border-purple-500/20 pt-4">
+                  <div className="flex flex-wrap gap-3 text-sm text-gray-400">
+                    {project.highlights.map((highlight) => (
+                      <span key={highlight} className="flex items-center gap-1">
+                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
+                        {highlight}
                       </span>
                     ))}
                   </div>
-                  <div className="border-t border-purple-500/20 pt-4">
-                    <div className="flex flex-wrap gap-3 text-sm text-gray-400">
-                      {project.highlights.map((highlight) => (
-                        <span
-                          key={highlight}
-                          className="flex items-center gap-1"
-                        >
-                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
+
+                {project.links?.length ? (
+                  <div className="mt-5 flex flex-wrap gap-2 items-center">
+                    {project.links.map((l) => (
+                      <a
+                        key={l.href}
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 border border-purple-500/30 hover:border-purple-500/60 hover:bg-slate-800 transition inline-flex items-center gap-2"
+                      >
+                        {l.label}
+                        {l.note && (
+                          <span className="text-[11px] text-gray-400 font-normal">
+                            • {l.note}
+                          </span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
               ))}
             </div>
           </div>
