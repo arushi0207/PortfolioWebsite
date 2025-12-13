@@ -315,7 +315,7 @@ const skills: Record<
 interface ProjectLink {
   label: string;
   href: string;
-  kind?: "github" | "demo";
+  kind?: "github" | "demo" | "context";
   note?: string;
 }
 
@@ -325,11 +325,13 @@ interface Project {
   tech: string[];
   highlights: string[];
   links?: ProjectLink[];
+  context?: string;
 }
 
 const projects: Project[] = [
   {
-    title: "AI-Powered Feedback Coach (Qualcomm Capstone)",
+    title: "SpeakEasy. AI-Powered Feedback Coach",
+    context: "Capstone Project",
     description:
       "An on device AI system for analyzing posture, gaze, gestures, and expressions during presentations. Built to run efficiently on Snapdragon PCs and turn multimodal signals into clear, actionable feedback for speakers.",
     tech: [
@@ -360,7 +362,35 @@ const projects: Project[] = [
   ],
   },
   {
+    title: "365Labs",
+    context: "Internship",
+    description:
+      "Production software for automating law enforcement record workflows and ensuring multi-state IBR and NIBRS compliance. Built within a compliance-heavy environment where correctness and validation were critical.",
+    tech: [
+      "C#",
+      ".NET",
+      "UWP",
+      "Azure",
+      "MSSQL",
+      "PSPDFKit",
+      "OCR",
+      "OpenAI",
+    ],
+    highlights: [
+      "Automated report extraction and validation to reduce manual data entry",
+      "Designed extensible JSON-based mappings for multi-jurisdiction rules",
+      "Shipped compliance-critical features used by real agencies",
+    ],
+    links: [
+    {
+      label: "Experience Context",
+      href: "https://365labs.com/law-enforcement/records-management/",
+    },
+  ],
+  },
+  {
     title: "XpertDispatch Driver's Application",
+    context: "Personal Project",
     description:
       "A real-time task management app for truck drivers that simplifies proof-of-delivery workflows. Built as a full-stack system with secure document upload and a production-ready mobile experience.",
     tech: ["React Native", "Expo", "JavaScript", "Azure", "MSSQL", "REST APIs", "Azure Blob Storage", "XCode"],
@@ -378,60 +408,26 @@ const projects: Project[] = [
   ],
   },
   {
-    title: "Law Enforcement Records Automation",
+    title: "Hidden Village",
+    context: "Research Lab Project",
     description:
-      "Modernized a Records Management System to ensure NIBRS compliance, automate PDF extraction, and reduce manual data entry for multi-state agencies.",
-    tech: [
-      "C#",
-      ".NET",
-      "UWP",
-      "Azure",
-      "MSSQL",
-      "iText7",
-      "GdPicture OCR",
-      "PSPDFKit",
-      "OpenAI",
-    ],
-    highlights: [
-      "100% NIBRS/IBR data validity across jurisdictions",
-      "60% reduction in manual entry time",
-      "Heuristic JSON mapping engine for flexible templates",
-    ],
-    links: [
-    {
-      label: "GitHub",
-      href: "https://github.com/arushi0207/CS620-Snapdragons",
-      kind: "github",
-    },
-    {
-      label: "Live Demo (frontend)",
-      href: "https://cs-620-snapdragons.vercel.app/",
-      kind: "demo",
-      note: "Backend currently runs locally",
-    },
-  ],
-  },
-  {
-    title: "Motion-Capture Interaction Toolkit",
-    description:
-      "Realtime motion-capture system supporting fluid gesture interactions and narrative scripting for research in interactive systems.",
+      "An interactive motion capture experience built for research into gesture driven interaction and narrative systems. Designed to support stable real time pose tracking and rapid experimentation.",
     tech: ["JavaScript", "React Native", "Firebase", "Motion Capture"],
     highlights: [
-      "40% reduction in crash frequency",
-      "Custom tweening for smooth pose transitions",
-      "Dynamic script editor for rapid prototyping",
+      "Improved real time motion capture syncing to reduce crashes and instability",
+      "Custom tweening for smoother pose and gesture transitions",
+      "In app scripting tools to support rapid research iteration",
     ],
     links: [
     {
       label: "GitHub",
-      href: "https://github.com/arushi0207/CS620-Snapdragons",
+      href: "https://github.com/rhythmation/hidden_village_v0.6b",
       kind: "github",
     },
     {
-      label: "Live Demo (frontend)",
-      href: "https://cs-620-snapdragons.vercel.app/",
-      kind: "demo",
-      note: "Backend currently runs locally",
+      label: "Lab Context",
+      href: "https://magiclab.wceruw.org/research/where-is-the-hidden-village-its-online/",
+      kind: "context",
     },
   ],
   },
@@ -503,7 +499,7 @@ const PersonalAIChat: React.FC = () => {
   };
 
   return (
-    <div className="pointer-events-auto w-[320px] bg-slate-950/90 border border-purple-500/40 rounded-2xl shadow-xl shadow-purple-900/40 backdrop-blur-md p-4 flex flex-col gap-3">
+    <div className="pointer-events-auto w-[500px] bg-slate-950/90 border border-purple-500/40 rounded-2xl shadow-xl shadow-purple-900/40 backdrop-blur-md p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-purple-300">
@@ -1262,10 +1258,16 @@ const Portfolio: React.FC = () => {
                 key={idx}
                 className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105 group"
               >
-                <div className="flex justify-between items-start mb-4">
+                <div className="mb-4">
                   <h3 className="text-2xl font-bold group-hover:text-purple-400 transition-colors">
                     {project.title}
                   </h3>
+
+                  {project.context && (
+                    <span className="mt-1 inline-block text-xs uppercase tracking-wide text-purple-300/80">
+                      {project.context}
+                    </span>
+                  )}
                 </div>
 
                 <p className="text-gray-300 mb-4 leading-relaxed">
